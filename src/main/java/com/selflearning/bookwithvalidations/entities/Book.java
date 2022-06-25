@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 @Data
 @Entity
@@ -17,13 +18,11 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotEmpty(message = "Please provide a name")
     private String name;
 
     private String author;
 
-    @NotNull(message = "Please provide a price")
-    private double price;
+    private BigDecimal price;
 
     //@DecimalMin("1.00")
 }
