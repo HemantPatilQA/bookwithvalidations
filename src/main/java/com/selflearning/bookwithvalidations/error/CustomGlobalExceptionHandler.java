@@ -1,5 +1,8 @@
 package com.selflearning.bookwithvalidations.error;
 
+import com.selflearning.bookwithvalidations.controllers.BookController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +23,9 @@ import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler {
+
+    private static final Logger logger = LoggerFactory.getLogger(CustomGlobalExceptionHandler.class);
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                   HttpHeaders headers,
@@ -37,12 +43,13 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
                 .collect(Collectors.toList());
 
         body.put("errors", errors);
-
+        logger.error("Add Book Errors : " + body.get("errors"));
         return new ResponseEntity<>(body, headers, status);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
     public void constraintViolationException(HttpServletResponse response) throws IOException {
+        logger.error("Book Search error for : " + response.toString());
         response.sendError(HttpStatus.BAD_REQUEST.value());
     }
 }
