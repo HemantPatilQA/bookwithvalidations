@@ -1,5 +1,6 @@
 package com.selflearning.bookwithvalidations.dtos;
 
+import com.selflearning.bookwithvalidations.error.validator.Author;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +17,7 @@ public class BookDTO {
     @NotEmpty(message = "Please provide a name")
     private String name;
 
+    @Author
     private String author;
 
     @NotNull(message = "Please provide a price")
