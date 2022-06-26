@@ -55,4 +55,22 @@ public class BookController {
 
         return new ResponseEntity<>(bookDTOList, HttpStatus.OK);
     }
+
+    @GetMapping("/id/{id}")
+    public ResponseEntity<BookDTO> getBookById(@PathVariable(value = "id") Long bookId){
+        return new ResponseEntity<>(modelMapper.map(bookService.getBookById(bookId), BookDTO.class), HttpStatus.OK);
+    }
+
+    @PutMapping("/id/{id}")
+    public ResponseEntity<BookDTO> updateBookById(@PathVariable(value = "id") Long bookId, @Valid @RequestBody BookDTO bookDTO){
+        /*Book book = bookService.getBookById(bookId);
+
+        book.setName(bookDTO.getName());
+        book.setAuthor(bookDTO.getAuthor());*/
+
+//        Book book = modelMapper.map(bookDTO, Book.class);
+        Book updatedBook = bookService.updateBook(bookId, bookDTO);
+
+        return new ResponseEntity<>(modelMapper.map(updatedBook, BookDTO.class), HttpStatus.OK);
+    }
 }
